@@ -1,5 +1,4 @@
 import { IsOptional, IsString, ValidateNested } from 'class-validator';
- 
 
 class CreateUserDto {
   @IsString()
@@ -10,8 +9,6 @@ class CreateUserDto {
 
   @IsString()
   public password: string;
-
-  
 }
 
 export default CreateUserDto;

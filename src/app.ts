@@ -1,11 +1,11 @@
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import compress from "compression";
-import helmet from "helmet";
-import cors from "cors";
-import express, { Application } from "express";
-import Controller from "./interfaces/controller.interface";
-import errorMiddleware from "./middleware/error.middleware";
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import compress from 'compression';
+import helmet from 'helmet';
+import cors from 'cors';
+import express, { Application } from 'express';
+import Controller from './interfaces/controller.interface';
+import errorMiddleware from './middleware/error.middleware';
 
 class App {
   private app: Application;
@@ -42,7 +42,7 @@ class App {
 
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach(controller => {
-      this.app.use("/api", controller.router);
+      this.app.use('/api', controller.router);
     });
   }
 }

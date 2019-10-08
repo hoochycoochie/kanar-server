@@ -6,43 +6,46 @@ import {
   ManyToMany,
   JoinTable,
   BaseEntity
-} from "typeorm";
+} from 'typeorm';
 
-import uuid from "uuid/v4";
-import Role from "./role.entity";
+import uuid from 'uuid/v4';
+import Role from './role.entity';
 
-@Entity({ name: "member" })
+@Entity({ name: 'member' })
 class Member extends BaseEntity {
-  @PrimaryColumn("uuid") public id: string;
-  @Column({ type: "varchar" })
+  @PrimaryColumn('uuid') public id: string;
+  @Column({ type: 'varchar' })
   public name: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: 'varchar' })
   public fullname: string;
-  @Column({ type: "varchar" })
+  @Column({ type: 'varchar' })
   public lastname: string;
 
-  @Column({ type: "boolean" })
+  @Column({ type: 'boolean', default: false })
   public confirmed: boolean;
 
-  @Column({ type: "boolean" })
+  @Column({ type: 'boolean', default: false })
   public is_active: boolean;
 
-  @Column({ type: "text", unique: true })
+  @Column({ type: 'varchar', unique: true })
   public email: string;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ type: 'varchar', unique: true })
+  public phone: string;
+
+  @Column({ type: 'varchar', nullable: true })
   picture: string;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   picture_public_id: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: false })
   public password: string;
 
   @ManyToMany(() => Role)
   @JoinTable({
-    name: "member_role"
+    name: 'member_role'
   })
   roles: Role[];
   @BeforeInsert()

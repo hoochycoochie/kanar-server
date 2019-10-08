@@ -1,6 +1,4 @@
-import {
-  cleanEnv, port, str,
-} from 'envalid';
+import { cleanEnv, port, str } from 'envalid';
 
 function validateEnv() {
   cleanEnv(process.env, {
@@ -10,7 +8,7 @@ function validateEnv() {
     POSTGRES_USER: str(),
     POSTGRES_PASSWORD: str(),
     POSTGRES_DB: str(),
-    PORT: port(),
+    PORT: port()
   });
 }
 

@@ -7,40 +7,40 @@ import {
   JoinColumn,
   ManyToOne,
   BaseEntity
-} from "typeorm";
+} from 'typeorm';
 
-import uuid from "uuid/v4";
+import uuid from 'uuid/v4';
 
-import Company from "./company.entity";
-import Product from "./product.entity";
-import SalePoint from "./sale_point.entity";
-import Member from "./member.entity";
+import Company from './company.entity';
+import Product from './product.entity';
+import SalePoint from './sale_point.entity';
+import Member from './member.entity';
 
-const SALE = "SALE";
-const RETURN = "RETURN";
-const ADD = "ADD";
-export type OpeartionType = "SALE" | "RETURN" | "ADD";
+const SALE = 'SALE';
+const RETURN = 'RETURN';
+const ADD = 'ADD';
+export type OpeartionType = 'SALE' | 'RETURN' | 'ADD';
 
-@Entity({ name: "productoperation" })
+@Entity({ name: 'productoperation' })
 class ProductOperation extends BaseEntity {
-  @PrimaryColumn("uuid") public id: string;
+  @PrimaryColumn('uuid') public id: string;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: [SALE, RETURN, ADD]
   })
   role: OpeartionType;
 
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   authorId: string;
 
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   companyId: string;
 
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   productId: string;
 
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   salepointId: string;
 
   @OneToOne(() => Company)

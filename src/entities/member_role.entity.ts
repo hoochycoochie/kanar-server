@@ -5,17 +5,17 @@ import {
   JoinColumn,
   Column,
   BaseEntity
-} from "typeorm";
+} from 'typeorm';
 
-import Role from "./role.entity";
-import Member from "./member.entity";
+import Role from './role.entity';
+import Member from './member.entity';
 
-@Entity({ name: "member_role" })
+@Entity({ name: 'member_role' })
 class MemberRole extends BaseEntity {
-  @PrimaryColumn("uuid")
+  @PrimaryColumn('uuid')
   memberId: string;
 
-  @PrimaryColumn("uuid")
+  @PrimaryColumn('uuid')
   roleId: string;
 
   @OneToOne(() => Member)

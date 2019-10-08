@@ -1,11 +1,11 @@
-import express, { Request, Response, NextFunction } from "express";
-import Controller from "../interfaces/controller.interface";
-import validationMiddleware from "../middleware/validation.middleware";
-import CreateUserDto from "../dtos/user.dto";
-import AuthenticationService from "../services/authentication.service";
+import express, { Request, Response, NextFunction } from 'express';
+import Controller from '../interfaces/controller.interface';
+import validationMiddleware from '../middleware/validation.middleware';
+import CreateUserDto from '../dtos/user.dto';
+import AuthenticationService from '../services/authentication.service';
 
 class AuthenticationController implements Controller {
-  public path = "/auth";
+  public path = '/auth';
   public router = express.Router();
   private authenticationService = new AuthenticationService();
 
@@ -22,17 +22,17 @@ class AuthenticationController implements Controller {
   }
 
   private registration = async (
-    request: Request,
-    response: Response,
+    req: Request,
+    res: Response,
     next: NextFunction
   ) => {
-    const userData: CreateUserDto = request.body;
+    const userData: CreateUserDto = req.body;
     try {
       const { cookie, user } = await this.authenticationService.register(
         userData
       );
-      response.setHeader("Set-Cookie", [cookie]);
-      response.send(user);
+      res.setHeader('Set-Cookie', [cookie]);
+      res.send(user);
     } catch (error) {
       next(error);
     }

@@ -7,17 +7,16 @@ import {
   JoinColumn,
   OneToMany,
   BaseEntity
-} from "typeorm";
+} from 'typeorm';
 
-import uuid from "uuid/v4";
-import { Name } from "./name_description_embedded.entity";
-import Product from "./product.entity";
-import Member from "./member.entity";
+import uuid from 'uuid/v4';
+import { Name } from './name_description_embedded.entity';
+import Product from './product.entity';
+import Member from './member.entity';
 
-@Entity({ name: "category" })
-//@Unique(["name"])
+@Entity({ name: 'category' })
 class Category extends BaseEntity {
-  @PrimaryColumn("uuid") public id: string;
+  @PrimaryColumn('uuid') public id: string;
 
   @Column(() => Name, { prefix: false })
   embedded: Name;

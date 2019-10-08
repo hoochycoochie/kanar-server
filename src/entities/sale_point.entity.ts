@@ -7,25 +7,25 @@ import {
   JoinColumn,
   ManyToOne,
   BaseEntity
-} from "typeorm";
+} from 'typeorm';
 
-import uuid from "uuid/v4";
-import { Name } from "./name_description_embedded.entity";
-import Member from "./member.entity";
-import Company from "./company.entity";
+import uuid from 'uuid/v4';
+import { Name } from './name_description_embedded.entity';
+import Member from './member.entity';
+import Company from './company.entity';
 
-@Entity({ name: "salepoint" })
+@Entity({ name: 'salepoint' })
 //@Unique(["name"])
 class SalePoint extends BaseEntity {
-  @PrimaryColumn("uuid") public id: string;
+  @PrimaryColumn('uuid') public id: string;
 
   @Column(() => Name, { prefix: false })
   embedded: Name;
 
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   authorId: string;
 
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   companyId: string;
 
   @OneToOne(() => Member)
