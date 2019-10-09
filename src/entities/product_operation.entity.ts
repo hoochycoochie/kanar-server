@@ -6,7 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -27,7 +27,7 @@ class ProductOperation extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: [SALE, RETURN, ADD]
+    enum: [SALE, RETURN, ADD],
   })
   role: OpeartionType;
 

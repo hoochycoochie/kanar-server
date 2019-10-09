@@ -4,7 +4,7 @@ import {
   BeforeInsert,
   PrimaryColumn,
   Unique,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -12,14 +12,10 @@ import uuid from 'uuid/v4';
 @Entity({ name: 'role' })
 //@Unique(["name"])
 class Role extends BaseEntity {
-  constructor(name: string) {
-    super();
-    this.name = name;
-  }
   @PrimaryColumn('uuid')
   public id: string;
 
-  @Column()
+  @Column({ type: 'varchar', unique: true, nullable: false })
   public name: string;
 
   @BeforeInsert()

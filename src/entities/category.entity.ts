@@ -6,7 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -19,10 +19,11 @@ class Category extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
 
   @Column(() => Name, { prefix: false })
-  embedded: Name;
+  name: Name;
 
-  @Column()
-  authorId: any;
+  @Column({ type: 'uuid', nullable: false })
+  authorId: string;
+
   @OneToOne(() => Member)
   @JoinColumn()
   author: Member;

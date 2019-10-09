@@ -7,7 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -22,7 +22,7 @@ class Product extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
 
   @Column(() => Name, { prefix: false })
-  embedded: Name;
+  name: Name;
 
   @Column()
   isActive: boolean;
@@ -50,14 +50,6 @@ class Product extends BaseEntity {
 
   @ManyToOne(() => Category, category => category.products)
   category: Category;
-
-  @OneToOne(() => Member)
-  @JoinColumn()
-  author: Member;
-
-  @OneToOne(() => Company)
-  @JoinColumn()
-  company: Company;
 
   @OneToMany(() => Product, product => product.productoperations)
   productoperations: ProductOperation[];

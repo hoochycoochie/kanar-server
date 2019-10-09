@@ -1,13 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import validationMiddleware from '../middleware/validation.middleware';
 import CreateUserDto from '../dtos/user.dto';
 import AuthenticationService from '../services/authentication.service';
-import Member from '../entities/member.entity';
+ 
 
 class MemberController implements Controller {
   public path = '/auth';
-  public router = express.Router();
+  public router:Router = express.Router();
   private authenticationService = new AuthenticationService();
 
   constructor() {
@@ -20,35 +20,8 @@ class MemberController implements Controller {
       validationMiddleware(CreateUserDto),
       this.registration
     );
-
-    this.router.get(
-      `${this.path}/users`,
-      //validationMiddleware(CreateUserDto),
-      this.findAll
-    );
   }
 
-  private findAll = async (
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const user = new Member();
-
-      user.name = 'Fall';
-      user.lastname = 'Hey joe';
-      user.password = 'amadou';
-      // user.email = "toto@live.fr";
-      user.confirmed = true;
-      await user.save();
-      const users = await Member.find();
-
-      response.status(200).send(users);
-    } catch (error) {
-      response.status(500).send({ message: error.message });
-    }
-  };
   private registration = async (
     request: Request,
     response: Response,

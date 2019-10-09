@@ -6,7 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -20,17 +20,13 @@ class SalePoint extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
 
   @Column(() => Name, { prefix: false })
-  embedded: Name;
+  name: Name;
 
   @Column({ type: 'uuid', nullable: false })
   authorId: string;
 
   @Column({ type: 'uuid', nullable: false })
   companyId: string;
-
-  @OneToOne(() => Member)
-  @JoinColumn()
-  author: Member;
 
   @ManyToOne(() => Company, company => company.salepoints)
   company: Company;

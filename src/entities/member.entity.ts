@@ -5,7 +5,7 @@ import {
   PrimaryColumn,
   ManyToMany,
   JoinTable,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -17,7 +17,7 @@ class Member extends BaseEntity {
   @Column({ type: 'varchar' })
   public name: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   public fullname: string;
   @Column({ type: 'varchar' })
   public lastname: string;
@@ -31,7 +31,7 @@ class Member extends BaseEntity {
   @Column({ type: 'varchar', unique: true })
   public email: string;
 
-  @Column({ type: 'varchar', unique: true })
+  @Column({ type: 'varchar', unique: true, nullable: true })
   public phone: string;
 
   @Column({ type: 'varchar', nullable: true })
@@ -45,7 +45,7 @@ class Member extends BaseEntity {
 
   @ManyToMany(() => Role)
   @JoinTable({
-    name: 'member_role'
+    name: 'member_role',
   })
   roles: Role[];
   @BeforeInsert()

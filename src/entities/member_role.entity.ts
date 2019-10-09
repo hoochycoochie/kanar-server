@@ -4,7 +4,7 @@ import {
   OneToOne,
   JoinColumn,
   Column,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 
 import Role from './role.entity';

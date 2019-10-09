@@ -17,7 +17,7 @@ class AuthenticationService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     const user = this.userRepository.create({
       ...userData,
-      password: hashedPassword
+      password: hashedPassword,
     });
     await this.userRepository.save(user);
     user.password = undefined;
@@ -25,7 +25,7 @@ class AuthenticationService {
     const cookie = this.createCookie(tokenData);
     return {
       cookie,
-      user
+      user,
     };
   }
   public createCookie(tokenData: TokenData) {
@@ -35,11 +35,11 @@ class AuthenticationService {
     const expiresIn = 60 * 60; // an hour
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
-      id: user.id
+      id: user.id,
     };
     return {
       expiresIn,
-      token: jwt.sign(dataStoredInToken, secret, { expiresIn })
+      token: jwt.sign(dataStoredInToken, secret, { expiresIn }),
     };
   }
 }

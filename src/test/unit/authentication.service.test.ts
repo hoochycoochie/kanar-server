@@ -9,7 +9,7 @@ describe('The AuthenticationService', () => {
   describe('when creating a cookie', () => {
     const tokenData: TokenData = {
       token: '',
-      expiresIn: 1
+      expiresIn: 1,
     };
 
     (typeorm as any).getRepository.mockReturnValue({});
