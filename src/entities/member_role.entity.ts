@@ -21,7 +21,7 @@ class MemberRole extends BaseEntity {
   @PrimaryColumn('uuid')
   roleId: string;
 
-  @Column({ type: 'uuid', nullable: true,unique:false })
+  @Column({ type: 'uuid', nullable: true, unique: false })
   companyId: string;
 
   @Column({ type: 'varchar', nullable: true })

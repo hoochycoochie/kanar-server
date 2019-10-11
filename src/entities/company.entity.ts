@@ -43,7 +43,6 @@ class Company extends BaseEntity {
   @JoinColumn()
   owner: Member;
 
-
   @Column()
   @CreateDateColumn()
   createdAt: Date;
@@ -51,7 +50,7 @@ class Company extends BaseEntity {
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
-  
+
   @OneToMany(() => SalePoint, salepoint => salepoint.company)
   salepoints: SalePoint[];
 

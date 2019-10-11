@@ -19,7 +19,7 @@ class CategoryService {
 
   public async findById(id: string) {
     try {
-      console.log("id",id)
+      console.log('id', id);
       const cat = await this.categoryRepository.findOne({ where: { id } });
 
       return cat;
