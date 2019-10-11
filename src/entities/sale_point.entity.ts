@@ -7,20 +7,26 @@ import {
   JoinColumn,
   ManyToOne,
   BaseEntity,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
-import { Name } from './name_description_embedded.entity';
 import Member from './member.entity';
 import Company from './company.entity';
+import ProductOperation from './product_operation.entity';
+import Product from './product.entity';
 
 @Entity({ name: 'salepoint' })
-//@Unique(["name"])
 class SalePoint extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
 
-  @Column(() => Name, { prefix: false })
-  name: Name;
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
+
+  @Column({ type: 'text', nullable: true })
+  description: string;
 
   @Column({ type: 'uuid', nullable: false })
   authorId: string;
@@ -30,6 +36,20 @@ class SalePoint extends BaseEntity {
 
   @ManyToOne(() => Company, company => company.salepoints)
   company: Company;
+
+  @ManyToOne(() => Member, Member => Member.salepoints)
+  author: Member;
+
+  @ManyToMany(() => Product)
+  @JoinTable({
+    name: 'product_salepoint',
+  })
+  products: Product[];
+  @OneToMany(
+    () => ProductOperation,
+    productOperation => productOperation.salepoint
+  )
+  productOperations: ProductOperation[];
   @BeforeInsert()
   addId() {
     this.id = uuid();

@@ -8,6 +8,9 @@ import validateEnv from './utils/validateEnv';
 import MemberController from './controllers/member.controller';
 import mock from './mock';
 import ProductController from './controllers/product.controller';
+import CategoryController from './controllers/category.controller';
+import UserController from './controllers/user.controller';
+import SalePointController from './controllers/salepoint.controller';
 
 validateEnv();
 
@@ -26,6 +29,9 @@ validateEnv();
     new AuthenticationController(),
     new MemberController(),
     new ProductController(),
+    new CategoryController(),
+    new UserController(),
+    new SalePointController(),
   ]);
   app.listen();
 })();

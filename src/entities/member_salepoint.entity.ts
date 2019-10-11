@@ -9,41 +9,35 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Role from './role.entity';
 import Member from './member.entity';
-import Company from './company.entity';
+import SalePoint from './sale_point.entity';
 
-@Entity({ name: 'member_role' })
-class MemberRole extends BaseEntity {
+@Entity({ name: 'member_salepoint' })
+class MemberSalePoint extends BaseEntity {
   @PrimaryColumn('uuid')
   memberId: string;
 
   @PrimaryColumn('uuid')
-  roleId: string;
-
-  @Column({ type: 'uuid', nullable: true,unique:false })
-  companyId: string;
+  salepointId: string;
 
   @Column({ type: 'varchar', nullable: true })
   name: string;
-
   @Column()
   @CreateDateColumn()
   createdAt: Date;
-
+  @Column({ type: 'uuid', nullable: true, unique: false })
+  companyId: string;
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
+
   @OneToOne(() => Member)
   @JoinColumn()
   member: Member;
-  @OneToOne(() => Role)
-  @JoinColumn()
-  role: Role;
 
-  // @OneToOne(() => Company)
-  // @JoinColumn()
-  // company: Company;
+  @OneToOne(() => SalePoint)
+  @JoinColumn()
+  salepoint: SalePoint;
 }
 
-export default MemberRole;
+export default MemberSalePoint;

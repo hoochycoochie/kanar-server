@@ -3,14 +3,14 @@ import {
   Entity,
   BeforeInsert,
   PrimaryColumn,
-  OneToOne,
-  JoinColumn,
   OneToMany,
   BaseEntity,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
-import { Name } from './name_description_embedded.entity';
 import Product from './product.entity';
 import Member from './member.entity';
 
@@ -18,14 +18,21 @@ import Member from './member.entity';
 class Category extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
 
-  @Column(() => Name, { prefix: false })
-  name: Name;
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
   @Column({ type: 'uuid', nullable: false })
   authorId: string;
+  @Column()
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @OneToOne(() => Member)
-  @JoinColumn()
+  @Column()
+  @UpdateDateColumn()
+  updatedAt: Date;
+  @ManyToOne(() => Member, member => member.categories)
   author: Member;
 
   @OneToMany(() => Product, product => product.category)

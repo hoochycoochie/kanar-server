@@ -3,6 +3,7 @@ import Controller from '../interfaces/controller.interface';
 import validationMiddleware from '../middleware/validation.middleware';
 import CreateUserDto from '../dtos/user.dto';
 import AuthenticationService from '../services/authentication.service';
+import LogInDto from '../dtos/logIn.dto';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -15,26 +16,20 @@ class AuthenticationController implements Controller {
 
   private initializeRoutes() {
     this.router.post(
-      `${this.path}/register`,
-      validationMiddleware(CreateUserDto),
-      this.registration
+      `${this.path}/login`,
+      validationMiddleware(LogInDto),
+      this.login
     );
   }
 
-  private registration = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const userData: CreateUserDto = req.body;
+  private login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { cookie, user } = await this.authenticationService.register(
-        userData
-      );
-      res.setHeader('Set-Cookie', [cookie]);
-      res.send(user);
+      const data = await this.authenticationService.login(req.body);
+      res.status(200).json({ success: true, data });
     } catch (error) {
-      next(error);
+      console.log('error', error.path);
+
+      res.status(403).json({ success: false, error });
     }
   };
 }

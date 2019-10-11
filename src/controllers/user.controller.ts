@@ -1,11 +1,11 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
-import ProductService from '../services/product.service';
+import UserService from '../services/user.service';
 
-class ProductController implements Controller {
-  public path = '/products';
+class UserController implements Controller {
+  public path = '/users';
   public router: Router = express.Router();
-  private productService = new ProductService();
+  private userService = new UserService();
 
   constructor() {
     this.initializeRoutes();
@@ -25,7 +25,7 @@ class ProductController implements Controller {
     next: NextFunction
   ) => {
     try {
-      const data = await this.productService.find();
+      const data = await this.userService.find();
 
       response.status(200).json({ data });
     } catch (error) {
@@ -34,4 +34,4 @@ class ProductController implements Controller {
   };
 }
 
-export default ProductController;
+export default UserController;

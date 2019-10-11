@@ -6,10 +6,19 @@ import {
   ManyToMany,
   JoinTable,
   BaseEntity,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
 import Role from './role.entity';
+import Category from './category.entity';
+import Company from './company.entity';
+import Product from './product.entity';
+import SalePoint from './sale_point.entity';
+import ProductOperation from './product_operation.entity';
+import bcrypt from 'bcryptjs';
 
 @Entity({ name: 'member' })
 class Member extends BaseEntity {
@@ -40,14 +49,58 @@ class Member extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   picture_public_id: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: false, select: false })
   public password: string;
+
+  @Column()
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @ManyToMany(() => Role)
   @JoinTable({
     name: 'member_role',
   })
   roles: Role[];
+
+  @ManyToMany(() => SalePoint)
+  @JoinTable({
+    name: 'member_salepoint',
+  })
+  workingplaces: SalePoint[];
+
+  @OneToMany(() => Category, category => category.author)
+  categories: Category[];
+
+  @OneToMany(() => Company, company => company.author)
+  companies: Company[];
+
+  @OneToMany(() => Product, product => product.author)
+  products: Product[];
+
+  @OneToMany(() => SalePoint, salePoint => salePoint.author)
+  salepoints: SalePoint[];
+
+  @OneToMany(
+    () => ProductOperation,
+    productOperation => productOperation.author
+  )
+  productOperations: ProductOperation[];
+
+  hashPassword = async () => {
+    this.password = await bcrypt.hash(this.password, 8);
+  };
+
+  checkIfUnencryptedPasswordIsValid = async (unencryptedPassword: string) => {
+    const result: boolean = await bcrypt.compare(
+      unencryptedPassword,
+      this.password
+    );
+    return result;
+  };
   @BeforeInsert()
   addId() {
     this.id = uuid();

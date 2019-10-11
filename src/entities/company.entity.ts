@@ -7,19 +7,29 @@ import {
   BaseEntity,
   OneToOne,
   JoinColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
-import { Name } from './name_description_embedded.entity';
 import SalePoint from './sale_point.entity';
 import Member from './member.entity';
+import Product from './product.entity';
 
 @Entity({ name: 'company' })
 class Company extends BaseEntity {
   @PrimaryColumn('uuid') public id: string;
+  @Column({ type: 'varchar', unique: true, nullable: false })
+  name: string;
 
-  @Column(() => Name)
-  name: Name;
+  @Column({ type: 'text', nullable: true })
+  description: string;
+  @Column({ type: 'varchar', nullable: true })
+  picture: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  picture_public_id: string;
   @Column({ type: 'int', nullable: false, unique: true })
   reference: number;
 
@@ -31,13 +41,25 @@ class Company extends BaseEntity {
 
   @OneToOne(() => Member)
   @JoinColumn()
-  author: Member;
-
-  @OneToOne(() => Member)
-  @JoinColumn()
   owner: Member;
+
+
+  @Column()
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updatedAt: Date;
+  
   @OneToMany(() => SalePoint, salepoint => salepoint.company)
   salepoints: SalePoint[];
+
+  @OneToMany(() => Company, company => company.products)
+  products: Product[];
+
+  @ManyToOne(() => Member, member => member.companies)
+  author: Member;
   @BeforeInsert()
   addId() {
     this.id = uuid();

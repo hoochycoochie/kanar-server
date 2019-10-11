@@ -7,7 +7,9 @@ class ProductService {
 
   public async find() {
     try {
-      const products = await this.productRepository.find();
+      const products = await this.productRepository.find({
+        relations: ['author', 'category', 'salepoints'],
+      });
 
       return products;
     } catch (error) {

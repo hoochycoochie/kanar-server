@@ -3,11 +3,10 @@ import Controller from '../interfaces/controller.interface';
 import validationMiddleware from '../middleware/validation.middleware';
 import CreateUserDto from '../dtos/user.dto';
 import AuthenticationService from '../services/authentication.service';
- 
 
 class MemberController implements Controller {
   public path = '/auth';
-  public router:Router = express.Router();
+  public router: Router = express.Router();
   private authenticationService = new AuthenticationService();
 
   constructor() {

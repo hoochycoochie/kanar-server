@@ -2,8 +2,10 @@ import { IsString } from 'class-validator';
 
 class LogInDto {
   @IsString()
-  public email: string;
+  public identifiant: string;
 
+  @IsString()
+  public reference: string;
   @IsString()
   public password: string;
 }
