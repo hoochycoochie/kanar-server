@@ -50,7 +50,7 @@ class ProductController implements Controller {
       console.log('query========================================', query);
       const data = await this.productService.findAll(query);
 
-      res.status(200).json({ data});
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }

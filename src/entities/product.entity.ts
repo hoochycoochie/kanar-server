@@ -8,7 +8,6 @@ import {
   BaseEntity,
   ManyToMany,
   JoinTable,
-  
 } from 'typeorm';
 
 import uuid from 'uuid/v4';

@@ -26,7 +26,7 @@ class ProductService {
       if (name) {
         where = { name: Like('%' + name + '%') };
       }
-console.log("where",where)
+      console.log('where', where);
       const [result, total] = await this.productRepository.findAndCount({
         where,
         order: { name: 'DESC' },

@@ -93,7 +93,7 @@ export default async () => {
       confirmed: true,
       email: 'salerManager@live.fr',
       phone: '0782297584',
-      roles: [roleSalerManager,roleSalerWorker],
+      roles: [roleSalerManager, roleSalerWorker],
       password: 'amadou',
       fullname: 'toto',
       picture: `https://randomuser.me/api/portraits/men/3.jpg`,
@@ -131,7 +131,6 @@ export default async () => {
 
     await company1.save();
 
-    
     const memberRoleQuery: string = 'roleId=:roleId AND memberId = :memberId';
     const memberRoleSaler = await memberRoleRepository
       .createQueryBuilder()
@@ -154,8 +153,7 @@ export default async () => {
       })
       .execute();
 
-
-      const memberRoleSalerManager2 = await memberRoleRepository
+    const memberRoleSalerManager2 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
       .set({ companyId: company1.id, name: roleSalerWorker.name })
@@ -199,7 +197,7 @@ export default async () => {
     await salepoint2.save();
 
     salerWorker.workingplaces = [salepoint1, salepoint2];
-    salerManager.workingplaces =[salepoint1, salepoint2];
+    salerManager.workingplaces = [salepoint1, salepoint2];
     await salerWorker.save();
     await salerManager.save();
     const membeSalePointQuery: string =
@@ -225,8 +223,7 @@ export default async () => {
       })
       .execute();
 
-
-      const memberSalepoint11 = await memberRoleRepository
+    const memberSalepoint11 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberSalePoint)
       .set({ companyId: company1.id, name: salepoint1.name })
