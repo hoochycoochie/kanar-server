@@ -91,9 +91,9 @@ export default async () => {
       name: 'SalerManager',
       lastname: 'Fall',
       confirmed: true,
-      email: 'salermanager@live.fr',
+      email: 'salerManager@live.fr',
       phone: '0782297584',
-      roles: [roleSalerManager],
+      roles: [roleSalerManager,roleSalerWorker],
       password: 'amadou',
       fullname: 'toto',
       picture: `https://randomuser.me/api/portraits/men/3.jpg`,
@@ -130,6 +130,8 @@ export default async () => {
     });
 
     await company1.save();
+
+    
     const memberRoleQuery: string = 'roleId=:roleId AND memberId = :memberId';
     const memberRoleSaler = await memberRoleRepository
       .createQueryBuilder()
@@ -148,6 +150,17 @@ export default async () => {
       .set({ companyId: company1.id, name: roleSalerManager.name })
       .where(memberRoleQuery, {
         roleId: roleSalerManager.id,
+        memberId: salerManager.id,
+      })
+      .execute();
+
+
+      const memberRoleSalerManager2 = await memberRoleRepository
+      .createQueryBuilder()
+      .update(MemberRole)
+      .set({ companyId: company1.id, name: roleSalerWorker.name })
+      .where(memberRoleQuery, {
+        roleId: roleSalerWorker.id,
         memberId: salerManager.id,
       })
       .execute();
@@ -186,7 +199,9 @@ export default async () => {
     await salepoint2.save();
 
     salerWorker.workingplaces = [salepoint1, salepoint2];
+    salerManager.workingplaces =[salepoint1, salepoint2];
     await salerWorker.save();
+    await salerManager.save();
     const membeSalePointQuery: string =
       'memberId=:memberId AND salepointId = :salepointId';
 
@@ -207,6 +222,27 @@ export default async () => {
       .where(membeSalePointQuery, {
         salepointId: salepoint2.id,
         memberId: salerWorker.id,
+      })
+      .execute();
+
+
+      const memberSalepoint11 = await memberRoleRepository
+      .createQueryBuilder()
+      .update(MemberSalePoint)
+      .set({ companyId: company1.id, name: salepoint1.name })
+      .where(membeSalePointQuery, {
+        salepointId: salepoint1.id,
+        memberId: salerManager.id,
+      })
+      .execute();
+
+    const memberSalepoint21 = await memberRoleRepository
+      .createQueryBuilder()
+      .update(MemberSalePoint)
+      .set({ companyId: company1.id, name: salepoint2.name })
+      .where(membeSalePointQuery, {
+        salepointId: salepoint2.id,
+        memberId: salerManager.id,
       })
       .execute();
 

@@ -17,6 +17,12 @@ class ProductController implements Controller {
 
       this.find
     );
+
+    this.router.get(
+      `${this.path}/salepoint`,
+
+      this.findBySalePointAndCompany
+    );
   }
 
   private find = async (
@@ -28,6 +34,23 @@ class ProductController implements Controller {
       const data = await this.productService.find();
 
       response.status(200).json({ data });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  private findBySalePointAndCompany = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const query = req.query;
+
+      console.log('query========================================', query);
+      const data = await this.productService.findAll(query);
+
+      res.status(200).json({ data});
     } catch (error) {
       next(error);
     }
