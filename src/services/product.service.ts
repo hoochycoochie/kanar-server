@@ -33,7 +33,7 @@ class ProductService {
       const productSalepoints = await this.productSalepointRepository.find({
         where: { salepoint_id: salepointId },
       });
-     
+
       const productIds = productSalepoints.map(p => p.product_id);
       if (!productIds.length) {
         throw new Error('no products on salepoint ' + salepointId);
@@ -43,8 +43,8 @@ class ProductService {
       let name = query.name;
       let where = {};
       let order = {};
-      console.log("query",query)
-      console.log("skip",skip)
+      console.log('query', query);
+      console.log('skip', skip);
       if (name) {
         order = { name: 'DESC' };
         name.toLowerCase();

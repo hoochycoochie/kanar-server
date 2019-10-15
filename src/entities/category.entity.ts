@@ -34,7 +34,7 @@ class Category extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
   @ManyToOne(() => Member, member => member.categories)
-  @JoinColumn({ name: "author_id" })
+  @JoinColumn({ name: 'author_id' })
   author: Member;
 
   @OneToMany(() => Product, product => product.category)

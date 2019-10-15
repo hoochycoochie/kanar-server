@@ -35,11 +35,10 @@ class MemberRole extends BaseEntity {
   @UpdateDateColumn()
   updated_at: Date;
   @OneToOne(() => Member)
-  @JoinColumn({name:"member_id"})
+  @JoinColumn({ name: 'member_id' })
   member: Member;
   @OneToOne(() => Role)
-  @JoinColumn({name:"role_id"})
- 
+  @JoinColumn({ name: 'role_id' })
   role: Role;
 
   // @OneToOne(() => Company)

@@ -3,19 +3,16 @@ import {
   Entity,
   BeforeInsert,
   PrimaryColumn,
-  
   JoinColumn,
   ManyToOne,
   BaseEntity,
   OneToMany,
-  
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
 import Member from './member.entity';
 import Company from './company.entity';
 import ProductOperation from './product_operation.entity';
- 
 
 @Entity({ name: 'salepoint' })
 class SalePoint extends BaseEntity {
@@ -34,11 +31,11 @@ class SalePoint extends BaseEntity {
   company_id: string;
 
   @ManyToOne(() => Company, company => company.salepoints)
-  @JoinColumn({name:"company_id"})
+  @JoinColumn({ name: 'company_id' })
   company: Company;
 
   @ManyToOne(() => Member, Member => Member.salepoints)
-  @JoinColumn({name:"author_id"})
+  @JoinColumn({ name: 'author_id' })
   author: Member;
 
   // @ManyToMany(() => Product)

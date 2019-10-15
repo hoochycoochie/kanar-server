@@ -30,14 +30,13 @@ class MemberSalePoint extends BaseEntity {
   updated_at: Date;
   @Column({ type: 'uuid', nullable: true, unique: false })
   company_id: string;
- 
 
   @OneToOne(() => Member)
-  @JoinColumn({name:"member_id"})
+  @JoinColumn({ name: 'member_id' })
   member: Member;
 
   @OneToOne(() => SalePoint)
-  @JoinColumn({name:"salepoint_id"})
+  @JoinColumn({ name: 'salepoint_id' })
   salepoint: SalePoint;
 }
 

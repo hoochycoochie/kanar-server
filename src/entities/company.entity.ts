@@ -40,7 +40,7 @@ class Company extends BaseEntity {
   owner_id: string;
 
   @OneToOne(() => Member)
-  @JoinColumn({name:"owner_id"})
+  @JoinColumn({ name: 'owner_id' })
   owner: Member;
 
   @Column()
@@ -58,7 +58,7 @@ class Company extends BaseEntity {
   products: Product[];
 
   @ManyToOne(() => Member, member => member.companies)
-  @JoinColumn({name:"author_id"})
+  @JoinColumn({ name: 'author_id' })
   author: Member;
   @BeforeInsert()
   addId() {

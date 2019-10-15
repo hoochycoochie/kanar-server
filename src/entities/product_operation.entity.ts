@@ -43,19 +43,19 @@ class ProductOperation extends BaseEntity {
   salepoint_id: string;
 
   @ManyToOne(() => Member, member => member.salepoints)
-  @JoinColumn({name:"author_id"})
+  @JoinColumn({ name: 'author_id' })
   author: Member;
 
   @ManyToOne(() => Company, company => company.salepoints)
-  @JoinColumn({name:"company_id"})
+  @JoinColumn({ name: 'company_id' })
   company: Company;
 
   @ManyToOne(() => SalePoint, salePoint => salePoint.productOperations)
-  @JoinColumn({name:"salepoint_id"})
+  @JoinColumn({ name: 'salepoint_id' })
   salepoint: SalePoint;
 
   @ManyToOne(() => Product, product => product.productoperations)
-  @JoinColumn({name:"product_id"})
+  @JoinColumn({ name: 'product_id' })
   product: Product;
   @BeforeInsert()
   addId() {

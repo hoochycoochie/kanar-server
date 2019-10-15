@@ -131,7 +131,8 @@ export default async () => {
 
     await company1.save();
 
-    const memberRoleQuery: string = 'role_id=:role_id AND member_id = :member_id';
+    const memberRoleQuery: string =
+      'role_id=:role_id AND member_id = :member_id';
     const memberRoleSaler = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
