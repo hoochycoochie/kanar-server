@@ -8,6 +8,9 @@ import {
   BaseEntity,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -30,7 +33,7 @@ class Product extends BaseEntity {
   @Column({ type: 'int', nullable: false, unique: true })
   reference: number;
   @Column()
-  isActive: boolean;
+  is_active: boolean;
 
   @Column({ type: 'decimal' })
   price: number;
@@ -45,28 +48,48 @@ class Product extends BaseEntity {
   picture_public_id: string;
 
   @Column({ type: 'uuid' })
-  companyId: string;
+  company_id: string;
 
   @Column({ type: 'uuid', nullable: true })
-  categoryId: string;
+  category_id: string;
 
   @Column('uuid')
-  authorId: string;
+  author_id: string;
+
+  @Column()
+  @CreateDateColumn()
+  created_at: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToOne(() => Category, category => category.products)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @ManyToOne(() => Company, company => company.products)
+  @JoinColumn({ name: 'company_id' })
   company: Company;
 
   @OneToMany(() => Product, product => product.productoperations)
   productoperations: ProductOperation[];
 
   @ManyToOne(() => Member, member => member.products)
+  @JoinColumn({ name: 'author_id' })
   author: Member;
+
   @ManyToMany(() => SalePoint)
   @JoinTable({
     name: 'product_salepoint',
+    joinColumn: {
+      name: 'product_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'salepoint_id',
+      referencedColumnName: 'id',
+    },
   })
   salepoints: SalePoint[];
   @BeforeInsert()

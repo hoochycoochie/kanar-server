@@ -12,15 +12,10 @@ class ProductController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.get(
-      `${this.path}`,
-
-      this.find
-    );
+    this.router.get(`${this.path}`, this.find);
 
     this.router.get(
-      `${this.path}/salepoint`,
-
+      `${this.path}/salepoint/:salepointId/:companyId`,
       this.findBySalePointAndCompany
     );
   }
@@ -46,9 +41,14 @@ class ProductController implements Controller {
   ) => {
     try {
       const query = req.query;
+      const salepointId = req.params.salepointId;
+      const companyId = req.params.companyId;
 
-      console.log('query========================================', query);
-      const data = await this.productService.findAll(query);
+      const data = await this.productService.findAll({
+        salepointId,
+        companyId,
+        query,
+      });
 
       res.status(200).json({ data });
     } catch (error) {

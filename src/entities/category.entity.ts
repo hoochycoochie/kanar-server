@@ -8,6 +8,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -24,7 +25,7 @@ class Category extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
   @Column({ type: 'uuid', nullable: false })
-  authorId: string;
+  author_id: string;
   @Column()
   @CreateDateColumn()
   createdAt: Date;
@@ -33,6 +34,7 @@ class Category extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
   @ManyToOne(() => Member, member => member.categories)
+  @JoinColumn({ name: "author_id" })
   author: Member;
 
   @OneToMany(() => Product, product => product.category)

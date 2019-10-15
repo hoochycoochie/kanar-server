@@ -56,23 +56,17 @@ class AuthenticationService {
 
       const memberRoles: MemberRole[] = await this.memberRoleRepository
         .createQueryBuilder()
-        .where(
-          'MemberRole.memberId = :memberId AND  MemberRole.companyId = :companyId',
-          {
-            memberId: user.id,
-            companyId: company.id,
-          }
-        )
+        .where('member_id = :member_id AND  company_id = :company_id', {
+          member_id: user.id,
+          company_id: company.id,
+        })
         .getMany();
       const salepoints: MemberSalePoint[] = await this.memberSalePointRepository
         .createQueryBuilder()
-        .where(
-          'MemberSalePoint.memberId = :memberId AND  MemberSalePoint.companyId = :companyId',
-          {
-            memberId: user.id,
-            companyId: company.id,
-          }
-        )
+        .where('member_id = :member_id AND  company_id = :company_id', {
+          member_id: user.id,
+          company_id: company.id,
+        })
         .getMany();
 
       const { token } = await this.tokenize(user.id);

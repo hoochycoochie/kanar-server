@@ -16,29 +16,30 @@ import Company from './company.entity';
 @Entity({ name: 'member_role' })
 class MemberRole extends BaseEntity {
   @PrimaryColumn('uuid')
-  memberId: string;
+  member_id: string;
 
   @PrimaryColumn('uuid')
-  roleId: string;
+  role_id: string;
 
   @Column({ type: 'uuid', nullable: true, unique: false })
-  companyId: string;
+  company_id: string;
 
   @Column({ type: 'varchar', nullable: true })
   name: string;
 
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
   @OneToOne(() => Member)
-  @JoinColumn()
+  @JoinColumn({name:"member_id"})
   member: Member;
   @OneToOne(() => Role)
-  @JoinColumn()
+  @JoinColumn({name:"role_id"})
+ 
   role: Role;
 
   // @OneToOne(() => Company)

@@ -9,7 +9,7 @@ import Product from '../entities/product.entity';
 import MemberRole from '../entities/member_role.entity';
 import MemberSalePoint from '../entities/member_salepoint.entity';
 
-const TOTAL_PRODUCT = 20;
+const TOTAL_PRODUCT = 50;
 export default async () => {
   try {
     const roleRepository = getRepository(Role);
@@ -123,22 +123,22 @@ export default async () => {
     const company1 = await companyRepository.create({
       name: 'yum yum ',
       description: faker.lorem.paragraph(),
-      authorId: manager.id,
-      ownerId: saler.id,
+      author_id: manager.id,
+      owner_id: saler.id,
       picture: `https://randomuser.me/api/portraits/men/4.jpg`,
       picture_public_id: faker.commerce.productMaterial(),
     });
 
     await company1.save();
 
-    const memberRoleQuery: string = 'roleId=:roleId AND memberId = :memberId';
+    const memberRoleQuery: string = 'role_id=:role_id AND member_id = :member_id';
     const memberRoleSaler = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
-      .set({ companyId: company1.id, name: roleSaler.name })
+      .set({ company_id: company1.id, name: roleSaler.name })
       .where(memberRoleQuery, {
-        roleId: roleSaler.id,
-        memberId: saler.id,
+        role_id: roleSaler.id,
+        member_id: saler.id,
       })
 
       .execute();
@@ -146,30 +146,30 @@ export default async () => {
     const memberRoleSalerManager = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
-      .set({ companyId: company1.id, name: roleSalerManager.name })
+      .set({ company_id: company1.id, name: roleSalerManager.name })
       .where(memberRoleQuery, {
-        roleId: roleSalerManager.id,
-        memberId: salerManager.id,
+        role_id: roleSalerManager.id,
+        member_id: salerManager.id,
       })
       .execute();
 
     const memberRoleSalerManager2 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
-      .set({ companyId: company1.id, name: roleSalerWorker.name })
+      .set({ company_id: company1.id, name: roleSalerWorker.name })
       .where(memberRoleQuery, {
-        roleId: roleSalerWorker.id,
-        memberId: salerManager.id,
+        role_id: roleSalerWorker.id,
+        member_id: salerManager.id,
       })
       .execute();
 
     const memberRoleSalerWorker = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberRole)
-      .set({ companyId: company1.id, name: roleSalerWorker.name })
+      .set({ company_id: company1.id, name: roleSalerWorker.name })
       .where(memberRoleQuery, {
-        roleId: roleSalerWorker.id,
-        memberId: salerWorker.id,
+        role_id: roleSalerWorker.id,
+        member_id: salerWorker.id,
       })
       .execute();
 
@@ -180,8 +180,8 @@ export default async () => {
       name: faker.name.jobArea(),
       //  description: faker.lorem.paragraph(),
 
-      authorId: saler.id,
-      companyId: company1.id,
+      author_id: saler.id,
+      company_id: company1.id,
     });
 
     await salepoint1.save();
@@ -190,8 +190,8 @@ export default async () => {
       name: faker.name.jobArea(),
       // description: faker.lorem.paragraph(),
 
-      authorId: saler.id,
-      companyId: company1.id,
+      author_id: saler.id,
+      company_id: company1.id,
     });
 
     await salepoint2.save();
@@ -201,45 +201,45 @@ export default async () => {
     await salerWorker.save();
     await salerManager.save();
     const membeSalePointQuery: string =
-      'memberId=:memberId AND salepointId = :salepointId';
+      'member_id=:member_id AND salepoint_id = :salepoint_id';
 
     const memberSalepoint1 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberSalePoint)
-      .set({ companyId: company1.id, name: salepoint1.name })
+      .set({ company_id: company1.id, name: salepoint1.name })
       .where(membeSalePointQuery, {
-        salepointId: salepoint1.id,
-        memberId: salerWorker.id,
+        salepoint_id: salepoint1.id,
+        member_id: salerWorker.id,
       })
       .execute();
 
     const memberSalepoint2 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberSalePoint)
-      .set({ companyId: company1.id, name: salepoint2.name })
+      .set({ company_id: company1.id, name: salepoint2.name })
       .where(membeSalePointQuery, {
-        salepointId: salepoint2.id,
-        memberId: salerWorker.id,
+        salepoint_id: salepoint2.id,
+        member_id: salerWorker.id,
       })
       .execute();
 
     const memberSalepoint11 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberSalePoint)
-      .set({ companyId: company1.id, name: salepoint1.name })
+      .set({ company_id: company1.id, name: salepoint1.name })
       .where(membeSalePointQuery, {
-        salepointId: salepoint1.id,
-        memberId: salerManager.id,
+        salepoint_id: salepoint1.id,
+        member_id: salerManager.id,
       })
       .execute();
 
     const memberSalepoint21 = await memberRoleRepository
       .createQueryBuilder()
       .update(MemberSalePoint)
-      .set({ companyId: company1.id, name: salepoint2.name })
+      .set({ company_id: company1.id, name: salepoint2.name })
       .where(membeSalePointQuery, {
-        salepointId: salepoint2.id,
-        memberId: salerManager.id,
+        salepoint_id: salepoint2.id,
+        member_id: salerManager.id,
       })
       .execute();
 
@@ -249,18 +249,18 @@ export default async () => {
     const cat1 = await categoryRepository.create({
       name: 'Quincaillerie',
       description: faker.lorem.paragraph(),
-      authorId: saler.id,
+      author_id: saler.id,
     });
     await cat1.save();
 
     await Array.from({ length: TOTAL_PRODUCT }).forEach(async (_, i) => {
       const prod1 = await productRepository.create({
-        companyId: company1.id,
-        authorId: saler.id,
-        categoryId: cat1.id,
+        company_id: company1.id,
+        author_id: saler.id,
+        category_id: cat1.id,
         price: parseFloat(faker.commerce.price()),
         quantity: parseFloat(faker.commerce.price()),
-        isActive: true,
+        is_active: true,
         picture: `https://randomuser.me/api/portraits/women/${i}.jpg`,
         picture_public_id: faker.lorem.slug(),
 

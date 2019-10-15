@@ -5,6 +5,7 @@ import {
   PrimaryColumn,
   ManyToOne,
   BaseEntity,
+  JoinColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -30,27 +31,31 @@ class ProductOperation extends BaseEntity {
   role: OpeartionType;
 
   @Column({ type: 'uuid', nullable: false })
-  authorId: string;
+  author_id: string;
 
   @Column({ type: 'uuid', nullable: false })
-  companyId: string;
+  company_id: string;
 
   @Column({ type: 'uuid', nullable: false })
-  productId: string;
+  product_id: string;
 
   @Column({ type: 'uuid', nullable: true })
-  salepointId: string;
+  salepoint_id: string;
 
   @ManyToOne(() => Member, member => member.salepoints)
+  @JoinColumn({name:"author_id"})
   author: Member;
 
   @ManyToOne(() => Company, company => company.salepoints)
+  @JoinColumn({name:"company_id"})
   company: Company;
 
   @ManyToOne(() => SalePoint, salePoint => salePoint.productOperations)
+  @JoinColumn({name:"salepoint_id"})
   salepoint: SalePoint;
 
   @ManyToOne(() => Product, product => product.productoperations)
+  @JoinColumn({name:"product_id"})
   product: Product;
   @BeforeInsert()
   addId() {

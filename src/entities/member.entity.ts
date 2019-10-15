@@ -54,21 +54,37 @@ class Member extends BaseEntity {
 
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @ManyToMany(() => Role)
   @JoinTable({
     name: 'member_role',
+    joinColumn: {
+      name: 'member_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
   })
   roles: Role[];
 
   @ManyToMany(() => SalePoint)
   @JoinTable({
     name: 'member_salepoint',
+    joinColumn: {
+      name: 'member_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'salepoint_id',
+      referencedColumnName: 'id',
+    },
   })
   workingplaces: SalePoint[];
 

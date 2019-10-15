@@ -3,20 +3,19 @@ import {
   Entity,
   BeforeInsert,
   PrimaryColumn,
-  OneToOne,
+  
   JoinColumn,
   ManyToOne,
   BaseEntity,
   OneToMany,
-  ManyToMany,
-  JoinTable,
+  
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
 import Member from './member.entity';
 import Company from './company.entity';
 import ProductOperation from './product_operation.entity';
-import Product from './product.entity';
+ 
 
 @Entity({ name: 'salepoint' })
 class SalePoint extends BaseEntity {
@@ -29,22 +28,24 @@ class SalePoint extends BaseEntity {
   description: string;
 
   @Column({ type: 'uuid', nullable: false })
-  authorId: string;
+  author_id: string;
 
   @Column({ type: 'uuid', nullable: false })
-  companyId: string;
+  company_id: string;
 
   @ManyToOne(() => Company, company => company.salepoints)
+  @JoinColumn({name:"company_id"})
   company: Company;
 
   @ManyToOne(() => Member, Member => Member.salepoints)
+  @JoinColumn({name:"author_id"})
   author: Member;
 
-  @ManyToMany(() => Product)
-  @JoinTable({
-    name: 'product_salepoint',
-  })
-  products: Product[];
+  // @ManyToMany(() => Product)
+  // @JoinTable({
+  //   name: 'product_salepoint',
+  // })
+  // products: Product[];
   @OneToMany(
     () => ProductOperation,
     productOperation => productOperation.salepoint

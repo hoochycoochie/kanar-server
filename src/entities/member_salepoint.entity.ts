@@ -15,28 +15,29 @@ import SalePoint from './sale_point.entity';
 @Entity({ name: 'member_salepoint' })
 class MemberSalePoint extends BaseEntity {
   @PrimaryColumn('uuid')
-  memberId: string;
+  member_id: string;
 
   @PrimaryColumn('uuid')
-  salepointId: string;
+  salepoint_id: string;
 
   @Column({ type: 'varchar', nullable: true })
   name: string;
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
-  @Column({ type: 'uuid', nullable: true, unique: false })
-  companyId: string;
+  created_at: Date;
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
+  @Column({ type: 'uuid', nullable: true, unique: false })
+  company_id: string;
+ 
 
   @OneToOne(() => Member)
-  @JoinColumn()
+  @JoinColumn({name:"member_id"})
   member: Member;
 
   @OneToOne(() => SalePoint)
-  @JoinColumn()
+  @JoinColumn({name:"salepoint_id"})
   salepoint: SalePoint;
 }
 

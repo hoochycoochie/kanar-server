@@ -34,13 +34,13 @@ class Company extends BaseEntity {
   reference: number;
 
   @Column({ type: 'uuid', nullable: false })
-  authorId: string;
+  author_id: string;
 
   @Column({ type: 'uuid', nullable: false })
-  ownerId: string;
+  owner_id: string;
 
   @OneToOne(() => Member)
-  @JoinColumn()
+  @JoinColumn({name:"owner_id"})
   owner: Member;
 
   @Column()
@@ -58,6 +58,7 @@ class Company extends BaseEntity {
   products: Product[];
 
   @ManyToOne(() => Member, member => member.companies)
+  @JoinColumn({name:"author_id"})
   author: Member;
   @BeforeInsert()
   addId() {
