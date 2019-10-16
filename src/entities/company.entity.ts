@@ -64,7 +64,6 @@ class Company extends BaseEntity {
   @JoinColumn({ name: 'author_id' })
   author: Member;
 
-
   @BeforeInsert()
   addId() {
     this.id = uuid();

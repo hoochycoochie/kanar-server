@@ -18,7 +18,7 @@ class CategoryController implements Controller {
   private initializeRoutes() {
     this.router.post(
       `${this.path}`,
-      
+
       this.find
     );
   }

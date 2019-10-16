@@ -101,7 +101,7 @@ class Member extends BaseEntity {
 
   @OneToMany(() => SalePoint, salePoint => salePoint.author)
   salepoints: SalePoint[];
-  
+
   @ManyToOne(() => Company, company => company.members)
   @JoinColumn({ name: 'company_id' })
   company: Company;

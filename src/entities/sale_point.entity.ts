@@ -39,7 +39,7 @@ class SalePoint extends BaseEntity {
   @Column()
   @UpdateDateColumn()
   updated_at: Date;
-  
+
   @ManyToOne(() => Company, company => company.salepoints)
   @JoinColumn({ name: 'company_id' })
   company: Company;
