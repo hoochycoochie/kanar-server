@@ -20,15 +20,11 @@ class ProductController implements Controller {
     );
   }
 
-  private find = async (
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) => {
+  private find = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await this.productService.find();
+      const data = await this.productService.find(req.query);
 
-      response.status(200).json({ data });
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }

@@ -1,10 +1,9 @@
 import { getRepository } from 'typeorm';
-import SalePoint from '../entities/sale_point.entity';
 import { ILike } from '../customs/Ilike';
+import Member from '../entities/member.entity';
 
-class SalePointService {
-  private salePointRepository = getRepository(SalePoint);
-
+class MemberService {
+  private memberRepository = getRepository(Member);
   public async find(query: any) {
     try {
       const { company_id, name } = query;
@@ -32,7 +31,7 @@ class SalePointService {
         order = { created_at: 'DESC' };
       }
 
-      const [data, total] = await this.salePointRepository.findAndCount({
+      const [data, total] = await this.memberRepository.findAndCount({
         where,
         order,
         take: parseInt(take),
@@ -49,6 +48,16 @@ class SalePointService {
       throw error;
     }
   }
+  public async findById(id: string) {
+    try {
+      console.log('id', id);
+      const cat = await this.memberRepository.findOne({ where: { id } });
+
+      return cat;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
-export default SalePointService;
+export default MemberService;

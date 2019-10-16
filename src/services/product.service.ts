@@ -8,13 +8,46 @@ class ProductService {
   private productRepository = getRepository(Product);
   private productSalepointRepository = getRepository(ProductSalePoint);
 
-  public async find() {
+  public async find(query) {
     try {
-      const products = await this.productRepository.find({
+      const take = query.take || 10;
+      const skip = query.skip || 0;
+      const { salepoint_id, company_id, name, category_id } = query;
+
+      if (!company_id) {
+        throw new Error('company unknown');
+      }
+
+      let where = {};
+      let order = {};
+
+      if (name) {
+        order = { name: 'DESC' };
+
+        where = {
+          name: ILike('%' + name.toLowerCase() + '%'),
+          company_id,
+        };
+
+        order = { name: 'DESC' };
+      } else {
+        order = { created_at: 'DESC' };
+      }
+
+      const [data, total] = await this.productRepository.findAndCount({
+        where,
+        order,
+        take: parseInt(take),
+        skip: parseInt(skip),
         relations: ['author', 'category', 'salepoints'],
       });
 
-      return products;
+      return {
+        data,
+        total,
+        skip,
+        take,
+      };
     } catch (error) {
       throw error;
     }
@@ -38,13 +71,12 @@ class ProductService {
       if (!productIds.length) {
         throw new Error('no products on salepoint ' + salepointId);
       }
-      const take = query.take || 10;
+      const take = query.take || 5;
       const skip = query.skip || 0;
       let name = query.name;
       let where = {};
       let order = {};
-      console.log('query', query);
-      console.log('skip', skip);
+
       if (name) {
         order = { name: 'DESC' };
         name.toLowerCase();

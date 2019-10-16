@@ -45,14 +45,17 @@ class Company extends BaseEntity {
 
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @OneToMany(() => SalePoint, salepoint => salepoint.company)
   salepoints: SalePoint[];
+
+  @OneToMany(() => Member, member => member.company)
+  members: Member[];
 
   @OneToMany(() => Company, company => company.products)
   products: Product[];
@@ -60,6 +63,8 @@ class Company extends BaseEntity {
   @ManyToOne(() => Member, member => member.companies)
   @JoinColumn({ name: 'author_id' })
   author: Member;
+
+
   @BeforeInsert()
   addId() {
     this.id = uuid();

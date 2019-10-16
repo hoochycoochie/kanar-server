@@ -1,13 +1,11 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
-import validationMiddleware from '../middleware/validation.middleware';
-import CreateUserDto from '../dtos/user.dto';
-import AuthenticationService from '../services/authentication.service';
+import MemberService from '../services/member.service';
 
 class MemberController implements Controller {
-  public path = '/auth';
+  public path = '/members';
   public router: Router = express.Router();
-  private authenticationService = new AuthenticationService();
+  private memberService = new MemberService();
 
   constructor() {
     this.initializeRoutes();
@@ -15,24 +13,16 @@ class MemberController implements Controller {
 
   private initializeRoutes() {
     this.router.post(
-      `${this.path}/register`,
-      validationMiddleware(CreateUserDto),
-      this.registration
+      `${this.path}`,
+
+      this.find
     );
   }
 
-  private registration = async (
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) => {
-    const userData: CreateUserDto = request.body;
+  private find = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { cookie, user } = await this.authenticationService.register(
-        userData
-      );
-      response.setHeader('Set-Cookie', [cookie]);
-      response.send(user);
+      const data = await this.memberService.find(req.body);
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }

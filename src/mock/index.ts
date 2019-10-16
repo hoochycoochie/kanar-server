@@ -127,6 +127,7 @@ export default async () => {
       owner_id: saler.id,
       picture: `https://randomuser.me/api/portraits/men/4.jpg`,
       picture_public_id: faker.commerce.productMaterial(),
+      members: [saler, salerManager, salerWorker],
     });
 
     await company1.save();

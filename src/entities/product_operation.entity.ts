@@ -28,7 +28,7 @@ class ProductOperation extends BaseEntity {
     type: 'enum',
     enum: [SALE, RETURN, ADD],
   })
-  role: OpeartionType;
+  operation_type: OpeartionType;
 
   @Column({ type: 'uuid', nullable: false })
   author_id: string;

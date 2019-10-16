@@ -7,6 +7,8 @@ import {
   ManyToOne,
   BaseEntity,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -30,6 +32,14 @@ class SalePoint extends BaseEntity {
   @Column({ type: 'uuid', nullable: false })
   company_id: string;
 
+  @Column()
+  @CreateDateColumn()
+  created_at: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updated_at: Date;
+  
   @ManyToOne(() => Company, company => company.salepoints)
   @JoinColumn({ name: 'company_id' })
   company: Company;

@@ -28,11 +28,11 @@ class Category extends BaseEntity {
   author_id: string;
   @Column()
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @Column()
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
   @ManyToOne(() => Member, member => member.categories)
   @JoinColumn({ name: 'author_id' })
   author: Member;

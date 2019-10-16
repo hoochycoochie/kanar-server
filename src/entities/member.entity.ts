@@ -9,6 +9,8 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import uuid from 'uuid/v4';
@@ -99,7 +101,10 @@ class Member extends BaseEntity {
 
   @OneToMany(() => SalePoint, salePoint => salePoint.author)
   salepoints: SalePoint[];
-
+  
+  @ManyToOne(() => Company, company => company.members)
+  @JoinColumn({ name: 'company_id' })
+  company: Company;
   @OneToMany(
     () => ProductOperation,
     productOperation => productOperation.author
