@@ -58,6 +58,15 @@ class CategoryService {
       throw error;
     }
   }
+
+  public async create(data) {
+    try {
+      const cat = await this.categoryRepository.create(data);
+      return cat;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default CategoryService;

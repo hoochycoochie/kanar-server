@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Controller from '../interfaces/controller.interface';
 import validationMiddleware from '../middleware/validation.middleware';
-import CreateUserDto from '../dtos/user.dto';
 import AuthenticationService from '../services/authentication.service';
 import LogInDto from '../dtos/logIn.dto';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -22,9 +22,16 @@ class AuthenticationController implements Controller {
     );
   }
 
-  private login = async (req: Request, res: Response, next: NextFunction) => {
+  private login = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const data = await this.authenticationService.login(req.body);
+
+      req.user_id = data.user.id;
+
       res.status(200).json({ success: true, data });
     } catch (error) {
       console.log('error', error.path);

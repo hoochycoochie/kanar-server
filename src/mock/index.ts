@@ -8,6 +8,13 @@ import Category from '../entities/category.entity';
 import Product from '../entities/product.entity';
 import MemberRole from '../entities/member_role.entity';
 import MemberSalePoint from '../entities/member_salepoint.entity';
+import {
+  ADMIN,
+  MANAGER,
+  SALER,
+  SALER_MANAGER,
+  SALER_WORKER,
+} from '../utils/constants';
 
 const TOTAL_PRODUCT = 50;
 export default async () => {
@@ -21,20 +28,20 @@ export default async () => {
     const memberRoleRepository = getRepository(MemberRole);
     const memberSalepointRepository = getRepository(MemberSalePoint);
 
-    const roleAdmin = await roleRepository.create({ name: 'admin' });
+    const roleAdmin = await roleRepository.create({ name: ADMIN });
     await Role.save(roleAdmin);
 
-    const roleManager = await roleRepository.create({ name: 'manager' });
+    const roleManager = await roleRepository.create({ name: MANAGER });
     await Role.save(roleManager);
 
-    const roleSaler = await roleRepository.create({ name: 'saler' });
+    const roleSaler = await roleRepository.create({ name: SALER });
     await Role.save(roleSaler);
     const roleSalerManager = await roleRepository.create({
-      name: 'salerManager',
+      name: SALER_MANAGER,
     });
     await Role.save(roleSalerManager);
     const roleSalerWorker = await roleRepository.create({
-      name: 'salerWorker',
+      name: SALER_WORKER,
     });
     await Role.save(roleSalerWorker);
 

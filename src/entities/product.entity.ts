@@ -30,7 +30,7 @@ class Product extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'int', nullable: false, unique: true })
+  @Column({ type: 'int', nullable: false })
   reference: number;
   @Column()
   is_active: boolean;

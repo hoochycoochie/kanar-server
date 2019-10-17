@@ -1,6 +1,9 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
 import Controller from '../interfaces/controller.interface';
 import ProductService from '../services/product.service';
+import saler_manager from '../middleware/saler_manager.middleware';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
+import authMiddleware from '../middleware/auth.middleware';
 
 class ProductController implements Controller {
   public path = '/products';
@@ -12,7 +15,11 @@ class ProductController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.find);
+    this.router.post(
+      `${this.path}`,
+      [authMiddleware, saler_manager],
+      this.find
+    );
 
     this.router.get(
       `${this.path}/salepoint/:salepointId/:companyId`,
@@ -20,9 +27,16 @@ class ProductController implements Controller {
     );
   }
 
-  private find = async (req: Request, res: Response, next: NextFunction) => {
+  private find = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      const data = await this.productService.find(req.query);
+      console.log('authorization', req.headers.authorization);
+      const authorization: string = req.headers.authorization;
+      let token = authorization.split(' ')[1];
+      const data = await this.productService.find(req.body);
 
       res.status(200).json({ data });
     } catch (error) {
@@ -31,7 +45,7 @@ class ProductController implements Controller {
   };
 
   private findBySalePointAndCompany = async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ) => {
